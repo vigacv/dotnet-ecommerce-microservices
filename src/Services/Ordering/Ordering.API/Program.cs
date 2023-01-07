@@ -1,3 +1,4 @@
+using Common.Logging;
 using EventBus.Messages.Common;
 using MassTransit;
 using Microsoft.IdentityModel.Tokens;
@@ -7,6 +8,7 @@ using Ordering.API.Mapping;
 using Ordering.Application;
 using Ordering.Infrastructure;
 using Ordering.Infrastructure.Persistence;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +53,8 @@ builder.Services.AddAuthorization(options =>
     {
         options.AddPolicy("ClientIdPolicy", policy => policy.RequireClaim("shopping_mvc_client"));
     });
+
+builder.Host.UseSerilog(SeriLogger.Configure);
 
 var app = builder.Build();
 

@@ -1,6 +1,8 @@
+using Common.Logging;
 using Discount.API.Entities;
 using Discount.API.Extensions;
 using Discount.API.Repositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
+
+builder.Host.UseSerilog(SeriLogger.Configure);
 
 var app = builder.Build();
 

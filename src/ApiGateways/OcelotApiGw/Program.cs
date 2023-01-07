@@ -2,14 +2,14 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Cache.CacheManager;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
+using Common.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile($"ocelot.{builder.Environment.EnvironmentName}.json", true, true);
 
-builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
+builder.Host.UseSerilog(SeriLogger.Configure);
 
 builder.Services.AddOcelot().AddCacheManager(settings => settings.WithDictionaryHandle());
 
